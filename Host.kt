@@ -11,12 +11,13 @@ fun main(args: Array<String>) {
 
   val file = File(args[0]);
   val fileName = file.getName();
+  val fileSize = file.length();
 
   val server = ServerSocket(PORT);
   println("server listening on port $PORT...");
   val clientSocket = server.accept(); //blocks
 
-  val responseHeader = "HTTP/1.1 200 OK\r\nContent-Disposition: attachment; filename=\"$fileName\"\r\n\r\n";
+  val responseHeader = "HTTP/1.1 200 OK\r\nContent-Length: $fileSize\r\nContent-Disposition: attachment; filename=\"$fileName\"\r\n\r\n";
 
   val read = FileInputStream(file);
   val write = clientSocket.getOutputStream();
@@ -31,7 +32,6 @@ fun main(args: Array<String>) {
   }
 
   write.write("\r\n\r\n".toByteArray());
-  clientSocket.close();
 
-  println("done, exiting...");
+  println("done.");
 }
