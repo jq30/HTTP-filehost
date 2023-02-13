@@ -33,5 +33,14 @@ fun main(args: Array<String>) {
 
   write.write("\r\n\r\n".toByteArray());
 
+  try {
+    while (true) {
+      Thread.sleep(1000);
+      write.write(0); //test connection
+    }
+  } catch (e: SocketException) {
+    println("connection closed."); //broken pipe
+  }
+
   println("done.");
 }
